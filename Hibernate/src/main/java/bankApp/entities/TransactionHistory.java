@@ -1,28 +1,28 @@
-package BankApp.Entities;
+package bankApp.entities;
 
 import javax.persistence.*;
 import java.security.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "Transaction")
-@Table(name = "Transaction")
+@Entity(name = "TransactionHistory")
+@Table(name = "transactionhistory")
 
 public class TransactionHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "Transaction_id")
-    private int Transaction_id;
+    @Column(name = "Transaction_Id")
+    private int transactionHistoryId;
     @Column(name = "Account_id")
-    private int Account_id;
+    private int accountId;
     @Column(name = "Deposit")
-    private double Deposit;
+    private double deposit;
     @Column(name = "Amount")
-    private double Amount;
-    @Column(name = "WithDraw")
-    private double WithDraw;
+    private double amount;
+    @Column(name = "Withdraw")
+    private double withdraw;
     @Column(name = "Balance")
-    private double Balance;
+    private double balance;
     @Column(name = "changed_at")
     private Timestamp changed_at;
 
@@ -34,8 +34,8 @@ public class TransactionHistory {
     public TransactionHistory() {
     }
 
-    public int getAccount_id() {
-        return Account_id;
+    public int getAccountId() {
+        return accountId;
     }
     public List<TransactionHistory> getTransaction() {
         return TransactionHistory;
@@ -43,32 +43,49 @@ public class TransactionHistory {
     public void setTransaction(List<TransactionHistory> transactionHistory) {
         this.TransactionHistory = transactionHistory;
     }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public int getTransactionHistoryId() {
+        return transactionHistoryId;
+    }
+
+    public void setTransactionHistoryId(int transactionHistoryId) {
+        this.transactionHistoryId = transactionHistoryId;
+    }
+
     public double getAmount() {
-        return Amount;
+        return amount;
     }
     public void setAmount(double amount) {
-        Amount = amount;
+        this.amount = amount;
     }
-    public void setAccount_id(int account_id) {
-        Account_id = account_id;
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
     }
     public double getDeposit() {
-        return Deposit;
+        return deposit;
     }
     public void setDeposit(double deposit) {
-        Deposit = deposit;
+        this.deposit = deposit;
     }
-    public double getWithDraw() {
-        return WithDraw;
+    public double getWithdraw() {
+        return withdraw;
     }
-    public void setWithDraw(double withDraw) {
-        WithDraw = withDraw;
+    public void setWithdraw(double withdraw) {
+        this.withdraw = withdraw;
     }
     public double getBalance() {
-        return Balance;
+        return balance;
     }
     public void setBalance(double balance) {
-        Balance = balance;
+        this.balance = balance;
     }
     public Timestamp getChanged_at() {
         return changed_at;
@@ -80,12 +97,12 @@ public class TransactionHistory {
     @Override
     public String toString() {
         return "TransactionHistory{" +
-                "Transaction_id=" + Transaction_id +
-                ", Account_id=" + Account_id +
-                ", Deposit=" + Deposit +
-                ", Amount=" + Amount +
-                ", WithDraw=" + WithDraw +
-                ", Balance=" + Balance +
+                "transactionHistoryId=" + transactionHistoryId +
+                ", accountId=" + accountId +
+                ", deposit=" + deposit +
+                ", amount=" + amount +
+                ", withdraw=" + withdraw +
+                ", balance=" + balance +
                 ", changed_at=" + changed_at +
                 ", account=" + account +
                 ", TransactionHistory=" + TransactionHistory +

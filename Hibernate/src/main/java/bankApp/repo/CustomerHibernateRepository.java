@@ -1,22 +1,20 @@
-package BankApp.Repo;
+package bankApp.repo;
 
-import BankApp.Entities.Bank;
-import BankApp.config.HibernateUtil;
+import bankApp.entities.Customer;
+import bankApp.config.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-public class BankHibernateRepository implements BankRepository {
-
+public class CustomerHibernateRepository implements CustomerRepository {
 
     @Override
-    public void create(Bank account) {
+    public void create(Customer customer) {
         Transaction transaction = null;
         try (Session session = getSession()) {
             transaction = session.beginTransaction();
-            
 
-            session.save(account);
+            session.save(customer);
 
             transaction.commit();
 
@@ -27,35 +25,38 @@ public class BankHibernateRepository implements BankRepository {
         }
     }
 
-    
     @Override
-    public Bank findById(Long id) {
-        Bank result = null;
+    public Customer findById(int customerId) {
+        Customer result = null;
         try (Session session = getSession()) {
-            result = session.find(Bank.class, id);
+            result = session.find(Customer.class, customerId);
         } catch (HibernateException e) {
             System.out.println(e.getMessage());
         }
         return result;
     }
 
-    
     @Override
-    public Bank update(Long id, Bank accountDetails) {
-        Bank result = null;
+    public Customer update(int customerId, Customer customerDetails) {
+        Customer result = null;
         Transaction transaction = null;
         try (Session session = getSession()) {
-            Bank bank = session.find(Bank.class, id);
+            Customer customerToBeUpdated = session.find(Customer.class, customerId);
 
             transaction = session.beginTransaction();
 
-            bank.setBankName(accountDetails.getBankName());
+            customerToBeUpdated.setFirstName(customerDetails.getFirstName());
+            customerToBeUpdated.setLastName(customerDetails.getLastName());
+            customerToBeUpdated.setAddress(customerDetails.getAddress());
+            customerToBeUpdated.setCNP(customerDetails.getCNP());
+            customerToBeUpdated.setDateOfBirth(customerDetails.getDateOfBirth());
+            customerToBeUpdated.setEmail(customerDetails.getEmail());
+            customerToBeUpdated.setPhone(customerDetails.getPhone());
 
-
-            session.update(bank);
+            session.update(customerToBeUpdated);
 
             transaction.commit();
-            result = session.find(Bank.class, id);
+            result = session.find(Customer.class, customerId);
         } catch (HibernateException e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -65,16 +66,15 @@ public class BankHibernateRepository implements BankRepository {
         return result;
     }
 
-    
     @Override
-    public void delete(Long id) {
+    public void delete(int customerId) {
         Transaction transaction = null;
         try (Session session = getSession()) {
-            Bank bank = session.find(Bank.class, id);
+            Customer customerToBeDeleted = session.find(Customer.class, customerId);
 
             transaction = session.beginTransaction();
 
-            session.delete(bank);
+            session.delete(customerToBeDeleted);
 
             transaction.commit();
         } catch (HibernateException e) {

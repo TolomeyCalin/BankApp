@@ -1,4 +1,4 @@
-package BankApp.Entities;
+package bankApp.entities;
 
 
 import javax.persistence.*;
@@ -10,15 +10,15 @@ import java.util.Date;
 public class Customer {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "Customer_Id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    @Column(name = "firstName")
+    private int customerId;
+    @Column(name = "FirstName")
     private String firstName;
-    @Column(name = "lastName")
+    @Column(name = "LastName")
     private String lastName;
-    @Column(name = "Date")
-    private Date DateOfBirth;
+    @Column(name = "DateOfBirth")
+    private Date dateOfBirth;
     @Column(name = "CNP")
     private long CNP;
     @Column(name = "Address")
@@ -32,11 +32,11 @@ public class Customer {
     }
 
     public Date getDateOfBirth() {
-        return DateOfBirth;
+        return dateOfBirth;
     }
 
     public void setDateOfBirth(Date dateOfBirth) {
-        DateOfBirth = dateOfBirth;
+        this.dateOfBirth = dateOfBirth;
     }
 
     public long getCNP() {
@@ -71,12 +71,12 @@ public class Customer {
         Email = email;
     }
 
-    public Long getId() {
-        return id;
+    public int getAccountId() {
+        return customerId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setAccountId(int accountId) {
+        this.customerId = accountId;
     }
 
     public String getFirstName() {
@@ -98,10 +98,10 @@ public class Customer {
     @Override
     public String toString() {
         return "Customer{" +
-                "id=" + id +
+                "id=" + customerId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", DateOfBirth=" + DateOfBirth +
+                ", DateOfBirth=" + dateOfBirth +
                 ", CNP=" + CNP +
                 ", Address='" + Address + '\'' +
                 ", Phone='" + Phone + '\'' +

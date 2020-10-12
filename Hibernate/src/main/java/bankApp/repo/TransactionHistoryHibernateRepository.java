@@ -1,7 +1,7 @@
-package BankApp.Repo;
+package bankApp.repo;
 
-import BankApp.Entities.TransactionHistory;
-import BankApp.config.HibernateUtil;
+import bankApp.entities.TransactionHistory;
+import bankApp.config.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -26,10 +26,10 @@ public class TransactionHistoryHibernateRepository implements TransactionHistory
     }
 
     @Override
-    public TransactionHistory findById(Long id) {
+    public TransactionHistory findById(int transactionHistoryId) {
         TransactionHistory result = null;
         try (Session session = getSession()) {
-            result = session.find(TransactionHistory.class, id);
+            result = session.find(TransactionHistory.class, transactionHistoryId);
         } catch (HibernateException e) {
             System.out.println(e.getMessage());
         }
@@ -37,23 +37,23 @@ public class TransactionHistoryHibernateRepository implements TransactionHistory
     }
 
     @Override
-    public TransactionHistory update(Long id, TransactionHistory accountDetails) {
+    public TransactionHistory update(int transactionHistoryId, TransactionHistory transactionDetails ) {
         TransactionHistory result = null;
         Transaction transaction = null;
         try (Session session = getSession()) {
-            TransactionHistory transactionHistory = session.find(TransactionHistory.class, id);
+            TransactionHistory transactionHistory = session.find(TransactionHistory.class, transactionHistoryId);
 
             transaction = session.beginTransaction();
 
-            transactionHistory.setAccount_id(accountDetails.getAccount_id());
-            transactionHistory.setDeposit(accountDetails.getDeposit());
-            transactionHistory.setAmount(accountDetails.getAmount());
-            transactionHistory.setWithDraw(accountDetails.getWithDraw());
-            transactionHistory.setBalance(accountDetails.getBalance());
+            transactionHistory.setAccountId(transactionDetails.getAccountId());
+            transactionHistory.setDeposit(transactionDetails.getDeposit());
+            transactionHistory.setAmount(transactionDetails.getAmount());
+            transactionHistory.setWithdraw(transactionDetails.getWithdraw());
+            transactionHistory.setBalance(transactionDetails.getBalance());
             session.update(transactionHistory);
 
             transaction.commit();
-            result = session.find(TransactionHistory.class, id);
+            result = session.find(TransactionHistory.class, transactionHistoryId);
         } catch (HibernateException e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -64,10 +64,10 @@ public class TransactionHistoryHibernateRepository implements TransactionHistory
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(int transactionHistoryId) {
         Transaction transaction = null;
         try (Session session = getSession()) {
-            TransactionHistory transactionHistory = session.find(TransactionHistory.class, id);
+            TransactionHistory transactionHistory = session.find(TransactionHistory.class, transactionHistoryId);
 
             transaction = session.beginTransaction();
 
