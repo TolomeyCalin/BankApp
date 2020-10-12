@@ -1,4 +1,6 @@
-package BankApp.customer;
+package BankApp.Repo;
+
+import BankApp.Entities.Customer;
 
 public interface CustomerRepository {
 

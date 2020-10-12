@@ -1,4 +1,4 @@
-package BankApp.customer;
+package BankApp.Entities;
 
 
 import javax.persistence.*;
@@ -95,4 +95,17 @@ public class Customer {
         this.lastName = lastName;
     }
 
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", DateOfBirth=" + DateOfBirth +
+                ", CNP=" + CNP +
+                ", Address='" + Address + '\'' +
+                ", Phone='" + Phone + '\'' +
+                ", Email='" + Email + '\'' +
+                '}';
+    }
 }

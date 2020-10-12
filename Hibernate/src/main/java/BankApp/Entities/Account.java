@@ -1,12 +1,30 @@
-package BankApp.account;
+package BankApp.Entities;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Account {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "account_id")
     private int account_id;
+    @Column(name = "IBAN")
     private Long IBAN;
+    @Column(name = "balance")
     private double balance;
+    @Column(name = "accountType")
     private String accountType;
 
+    @OneToMany(
+            mappedBy = "bank",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<TransactionHistory> transactionHistories = new ArrayList<>();
+
+
     public Account() {
+
 
     }
 

@@ -1,4 +1,6 @@
-package BankApp.account;
+package BankApp.Repo;
+
+import BankApp.Entities.Account;
 
 public interface AccountRepository {
     void create(Account account);

@@ -1,4 +1,4 @@
-package BankApp.transaction;
+package BankApp.Entities;
 
 import javax.persistence.*;
 import java.security.Timestamp;
@@ -8,7 +8,7 @@ import java.util.List;
 @Entity(name = "Transaction")
 @Table(name = "Transaction")
 
-public class Transaction {
+public class TransactionHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "Transaction_id")
@@ -25,20 +25,23 @@ public class Transaction {
     private double Balance;
     @Column(name = "changed_at")
     private Timestamp changed_at;
-    @ManyToMany(mappedBy = "AccountDetails")
-    private List<Transaction> Transaction = new ArrayList<>();
 
-    public Transaction() {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id")
+    private Account account;
+    private List<TransactionHistory> TransactionHistory = new ArrayList<>();
+
+    public TransactionHistory() {
     }
 
     public int getAccount_id() {
         return Account_id;
     }
-    public List<Transaction> getTransaction() {
-        return Transaction;
+    public List<TransactionHistory> getTransaction() {
+        return TransactionHistory;
     }
-    public void setTransaction(List<Transaction> transaction) {
-        this.Transaction = transaction;
+    public void setTransaction(List<TransactionHistory> transactionHistory) {
+        this.TransactionHistory = transactionHistory;
     }
     public double getAmount() {
         return Amount;
@@ -74,4 +77,18 @@ public class Transaction {
         this.changed_at = changed_at;
     }
 
+    @Override
+    public String toString() {
+        return "TransactionHistory{" +
+                "Transaction_id=" + Transaction_id +
+                ", Account_id=" + Account_id +
+                ", Deposit=" + Deposit +
+                ", Amount=" + Amount +
+                ", WithDraw=" + WithDraw +
+                ", Balance=" + Balance +
+                ", changed_at=" + changed_at +
+                ", account=" + account +
+                ", TransactionHistory=" + TransactionHistory +
+                '}';
+    }
 }

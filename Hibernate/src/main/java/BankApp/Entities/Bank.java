@@ -1,8 +1,13 @@
-package BankApp.bank;
+package BankApp.Entities;
+
+import javax.persistence.Column;
 
 public class Bank {
+    @Column(name = "BankName")
     private String BankName;
+    @Column(name = "Customer_id")
     private int Customer_id;
+    @Column(name = "Account_id")
     private int Account_id;
     public Bank() {
     }
