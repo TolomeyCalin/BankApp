@@ -39,7 +39,7 @@ public class Bank {
         return customerId;
     }
     public void setCustomerId(int customerId) {
-        customerId = customerId;
+        this.customerId = customerId;
     }
     public int getAccountId() {
         return accountId;

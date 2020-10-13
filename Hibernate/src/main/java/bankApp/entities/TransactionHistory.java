@@ -27,7 +27,7 @@ public class TransactionHistory {
     private Timestamp changed_at;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_id")
+    @JoinColumn(name = "Account_Id")
     private Account account;
     private List<TransactionHistory> TransactionHistory = new ArrayList<>();
 

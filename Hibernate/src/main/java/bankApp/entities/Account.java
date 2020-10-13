@@ -1,6 +1,8 @@
 package bankApp.entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "Account")
 @Table(name = "account")
@@ -17,11 +19,11 @@ public class Account {
     @Column(name = "AccountType")
     private String accountType;
 
-//    @OneToMany(
-//            mappedBy = "bank",
-//            cascade = CascadeType.ALL,
-//            orphanRemoval = true)
-//    private List<TransactionHistory> transactionHistories = new ArrayList<>();
+    @OneToMany(
+            mappedBy = "bank",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<TransactionHistory> transactionHistories = new ArrayList<>();
 
 
     public Account(String iban, double balance, String accountType) {
