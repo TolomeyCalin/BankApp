@@ -8,10 +8,14 @@ import org.hibernate.Transaction;
 
 public class CustomerHibernateRepository implements CustomerRepository {
 
+    public CustomerHibernateRepository() {
+
+    }
+
     @Override
     public void create(Customer customer) {
         Transaction transaction = null;
-        try (Session session = getSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
 
             session.save(customer);
@@ -48,10 +52,12 @@ public class CustomerHibernateRepository implements CustomerRepository {
             customerToBeUpdated.setFirstName(customerDetails.getFirstName());
             customerToBeUpdated.setLastName(customerDetails.getLastName());
             customerToBeUpdated.setAddress(customerDetails.getAddress());
-            customerToBeUpdated.setCNP(customerDetails.getCNP());
+            customerToBeUpdated.setCnp(customerDetails.getCnp());
             customerToBeUpdated.setDateOfBirth(customerDetails.getDateOfBirth());
             customerToBeUpdated.setEmail(customerDetails.getEmail());
             customerToBeUpdated.setPhone(customerDetails.getPhone());
+            customerToBeUpdated.setPassword(customerDetails.getPassword());
+            customerToBeUpdated.setUsername(customerDetails.getUsername());
 
             session.update(customerToBeUpdated);
 

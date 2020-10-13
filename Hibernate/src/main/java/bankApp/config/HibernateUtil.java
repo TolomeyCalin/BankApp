@@ -1,6 +1,6 @@
 package bankApp.config;
 
-import bankApp.entities.Account;
+import bankApp.entities.Customer;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -40,16 +40,16 @@ public class HibernateUtil {
             settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL8Dialect");
             settings.put(Environment.SHOW_SQL, "true");
             settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
-//            settings.put(Environment.HBM2DDL_AUTO, "create-drop");
+            settings.put(Environment.HBM2DDL_AUTO, "create");
 
             configuration.setProperties(settings);
 
         //One to many
 //        configuration.addAnnotatedClass(Bank.class);
-        configuration.addAnnotatedClass(Account.class);
+//        configuration.addAnnotatedClass(Account.class);
 
 //        configuration.addAnnotatedClass(TransactionHistory.class);
-//        configuration.addAnnotatedClass(Customer.class);
+        configuration.addAnnotatedClass(Customer.class);
 
 
             return configuration;

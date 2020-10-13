@@ -45,7 +45,7 @@ public class TransactionHistoryHibernateRepository implements TransactionHistory
 
             transaction = session.beginTransaction();
 
-            transactionHistory.setAccountId(transactionDetails.getAccountId());
+            transactionHistory.setBankId(transactionDetails.getBankId());
             transactionHistory.setDeposit(transactionDetails.getDeposit());
             transactionHistory.setAmount(transactionDetails.getAmount());
             transactionHistory.setWithdraw(transactionDetails.getWithdraw());

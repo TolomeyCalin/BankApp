@@ -2,7 +2,6 @@ package bankApp.entities;
 
 
 import javax.persistence.*;
-import java.util.Date;
 
 
 @Entity(name = "Customer")
@@ -12,71 +11,53 @@ public class Customer {
     @Id
     @Column(name = "Customer_Id")
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private String username;
+    @Column(name = "Username")
+    private String password;
+    @Column(name = "Password")
     private int customerId;
     @Column(name = "FirstName")
     private String firstName;
     @Column(name = "LastName")
     private String lastName;
     @Column(name = "DateOfBirth")
-    private Date dateOfBirth;
+    private String dateOfBirth;
     @Column(name = "CNP")
-    private long CNP;
+    private String cnp;
     @Column(name = "Address")
-    private String Address;
+    private String address;
     @Column(name = "Phone")
-    private String Phone;
+    private String phone;
     @Column(name = "Email")
-    private String Email;
+    private String email;
+
 
     public Customer() {
     }
 
-    public Date getDateOfBirth() {
-        return dateOfBirth;
+
+    public String getUsername() {
+        return username;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public long getCNP() {
-        return CNP;
+    public String getPassword() {
+        return password;
     }
 
-    public void setCNP(long CNP) {
-        this.CNP = CNP;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getAddress() {
-        return Address;
-    }
-
-    public void setAddress(String address) {
-        Address = address;
-    }
-
-    public String getPhone() {
-        return Phone;
-    }
-
-    public void setPhone(String phone) {
-        Phone = phone;
-    }
-
-    public String getEmail() {
-        return Email;
-    }
-
-    public void setEmail(String email) {
-        Email = email;
-    }
-
-    public int getAccountId() {
+    public int getCustomerId() {
         return customerId;
     }
 
-    public void setAccountId(int accountId) {
-        this.customerId = accountId;
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 
     public String getFirstName() {
@@ -95,17 +76,59 @@ public class Customer {
         this.lastName = lastName;
     }
 
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getCnp() {
+        return cnp;
+    }
+
+    public void setCnp(String cnp) {
+        this.cnp = cnp;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
-                "id=" + customerId +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", customerId=" + customerId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", DateOfBirth=" + dateOfBirth +
-                ", CNP=" + CNP +
-                ", Address='" + Address + '\'' +
-                ", Phone='" + Phone + '\'' +
-                ", Email='" + Email + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", cnp=" + cnp +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 }

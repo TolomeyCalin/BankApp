@@ -6,15 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "TransactionHistory")
-@Table(name = "transactionhistory")
+@Table(name = "transaction_history")
 
 public class TransactionHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "Transaction_Id")
+    @Column(name = "TransactionHistory_Id")
     private int transactionHistoryId;
-    @Column(name = "Account_id")
-    private int accountId;
+    @Column(name = "Bank_Id")
+    private int bankId;
     @Column(name = "Deposit")
     private double deposit;
     @Column(name = "Amount")
@@ -34,14 +34,27 @@ public class TransactionHistory {
     public TransactionHistory() {
     }
 
-    public int getAccountId() {
-        return accountId;
+    public int getBankId() {
+        return bankId;
     }
     public List<TransactionHistory> getTransaction() {
         return TransactionHistory;
     }
     public void setTransaction(List<TransactionHistory> transactionHistory) {
         this.TransactionHistory = transactionHistory;
+    }
+
+    public TransactionHistory(int bankId, double deposit, double amount,
+                              double withdraw, double balance, Timestamp changed_at,
+                              Account account, List<bankApp.entities.TransactionHistory> transactionHistory) {
+        this.bankId = bankId;
+        this.deposit = deposit;
+        this.amount = amount;
+        this.withdraw = withdraw;
+        this.balance = balance;
+        this.changed_at = changed_at;
+        this.account = account;
+        TransactionHistory = transactionHistory;
     }
 
     public Account getAccount() {
@@ -66,8 +79,8 @@ public class TransactionHistory {
     public void setAmount(double amount) {
         this.amount = amount;
     }
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
+    public void setBankId(int bankId) {
+        this.bankId = bankId;
     }
     public double getDeposit() {
         return deposit;
@@ -98,7 +111,7 @@ public class TransactionHistory {
     public String toString() {
         return "TransactionHistory{" +
                 "transactionHistoryId=" + transactionHistoryId +
-                ", accountId=" + accountId +
+                ", bankId=" + bankId +
                 ", deposit=" + deposit +
                 ", amount=" + amount +
                 ", withdraw=" + withdraw +
