@@ -34,20 +34,19 @@ public class HibernateUtil {
 
             Properties settings = new Properties();
             settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
-            settings.put(Environment.URL, "jdbc:mysql://localhost:3306/hibernate?serverTimezone=UTC");
+            settings.put(Environment.URL, "jdbc:mysql://localhost:3306/bankapp?serverTimezone=UTC");
             settings.put(Environment.USER, "root");
             settings.put(Environment.PASS, "1m2u3i4e");
             settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL8Dialect");
             settings.put(Environment.SHOW_SQL, "true");
             settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
-            settings.put(Environment.HBM2DDL_AUTO, "create");
+            settings.put(Environment.HBM2DDL_AUTO, "update");
 
             configuration.setProperties(settings);
 
         //One to many
 //        configuration.addAnnotatedClass(Bank.class);
 //        configuration.addAnnotatedClass(Account.class);
-
 //        configuration.addAnnotatedClass(TransactionHistory.class);
         configuration.addAnnotatedClass(Customer.class);
 

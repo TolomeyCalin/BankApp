@@ -9,13 +9,13 @@ import javax.persistence.*;
 public class Customer {
 
     @Id
-    @Column(name = "Customer_Id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String username;
-    @Column(name = "Username")
-    private String password;
-    @Column(name = "Password")
+    @Column(name = "Customer_Id")
     private int customerId;
+    @Column(name = "Username")
+    private String username;
+    @Column(name = "Password")
+    private String password;
     @Column(name = "FirstName")
     private String firstName;
     @Column(name = "LastName")
@@ -31,10 +31,8 @@ public class Customer {
     @Column(name = "Email")
     private String email;
 
-
     public Customer() {
     }
-
 
     public String getUsername() {
         return username;
@@ -50,14 +48,6 @@ public class Customer {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public int getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
     }
 
     public String getFirstName() {
