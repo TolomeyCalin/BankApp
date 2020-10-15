@@ -1,15 +1,15 @@
-package bankApp.repo;
+package bankApp.repository;
 
-import bankApp.entities.Account;
+import bankApp.entities.TransactionHistory;
 import bankApp.config.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-public class AccountHibernateRepository implements AccountRepository {
+public class TransactionHistoryHibernateRepository implements TransactionHistoryRepository {
 
     @Override
-    public void create(Account account) {
+    public void create(TransactionHistory account) {
         Transaction transaction = null;
         try (Session session = getSession()) {
             transaction = session.beginTransaction();
@@ -26,10 +26,10 @@ public class AccountHibernateRepository implements AccountRepository {
     }
 
     @Override
-    public Account findById(int accountId) {
-        Account result = null;
+    public TransactionHistory findById(int transactionHistoryId) {
+        TransactionHistory result = null;
         try (Session session = getSession()) {
-            result = session.find(Account.class, accountId);
+            result = session.find(TransactionHistory.class, transactionHistoryId);
         } catch (HibernateException e) {
             System.out.println(e.getMessage());
         }
@@ -37,22 +37,21 @@ public class AccountHibernateRepository implements AccountRepository {
     }
 
     @Override
-    public Account update(int accountId, Account accountDetails) {
-        Account result = null;
+    public TransactionHistory update(int transactionHistoryId, TransactionHistory transactionDetails ) {
+        TransactionHistory result = null;
         Transaction transaction = null;
         try (Session session = getSession()) {
-            Account accountToBeUpdated = session.find(Account.class, accountId);
+            TransactionHistory transactionHistory = session.find(TransactionHistory.class, transactionHistoryId);
 
             transaction = session.beginTransaction();
-
-            accountToBeUpdated.setIban(accountDetails.getIban());
-            accountToBeUpdated.setBalance(accountDetails.getBalance());
-            accountToBeUpdated.setAccountType(accountDetails.getAccountType());
-
-            session.update(accountToBeUpdated);
+            transactionHistory.setDeposit(transactionDetails.getDeposit());
+            transactionHistory.setAmount(transactionDetails.getAmount());
+            transactionHistory.setWithdraw(transactionDetails.getWithdraw());
+            transactionHistory.setBalance(transactionDetails.getBalance());
+            session.update(transactionHistory);
 
             transaction.commit();
-            result = session.find(Account.class, accountId);
+            result = session.find(TransactionHistory.class, transactionHistoryId);
         } catch (HibernateException e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -63,14 +62,14 @@ public class AccountHibernateRepository implements AccountRepository {
     }
 
     @Override
-    public void delete(int accountId) {
+    public void delete(int transactionHistoryId) {
         Transaction transaction = null;
         try (Session session = getSession()) {
-            Account accountToBeDeleted = session.find(Account.class, accountId);
+            TransactionHistory transactionHistory = session.find(TransactionHistory.class, transactionHistoryId);
 
             transaction = session.beginTransaction();
 
-            session.delete(accountToBeDeleted);
+            session.delete(transactionHistory);
 
             transaction.commit();
         } catch (HibernateException e) {

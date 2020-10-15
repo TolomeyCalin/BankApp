@@ -1,62 +1,67 @@
 package bankApp.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "Bank")
 @Table(name = "bank")
 
 public class Bank {
     @Id
-    @Column(name = "Bank_Id")
-    private int bankId;
-    @Column(name = "BankName")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+    @Column(name = "bankName")
     private String bankName;
-    @Column(name = "Customer_Id")
-    private int customerId;
-    @Column(name = "Account_Id")
-    private int accountId;
+    @ManyToMany(fetch=FetchType.LAZY,
+            cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+                    CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(
+            name="account_bank",
+            joinColumns=@JoinColumn(name="bank_id"),
+            inverseJoinColumns=@JoinColumn(name="account_id")
+    )
+    private List<Account> accounts;
+
     public Bank() {
     }
+
+    public Bank(int id, String bankName,  List<Account> accounts) {
+        this.id = id;
+        this.bankName = bankName;
+        this.accounts = accounts;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getBankName() {
         return bankName;
-    }
-
-    public int getBankId() {
-        return bankId;
-    }
-
-    public void setBankId(int bankId) {
-        this.bankId = bankId;
     }
 
     public void setBankName(String bankName) {
         this.bankName = bankName;
     }
-    public int getCustomerId() {
-        return customerId;
+
+    public List<Account> getAccounts() {
+        return accounts;
     }
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
-    }
-    public int getAccountId() {
-        return accountId;
-    }
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
     }
 
     @Override
     public String toString() {
         return "Bank{" +
-                "Bank_id=" + bankId +
-                ", BankName='" + bankName + '\'' +
-                ", Customer_id=" + customerId +
-                ", Account_id=" + accountId +
+                "id=" + id +
+                ", bankName='" + bankName + '\'' +
+                ", accounts=" + accounts +
                 '}';
     }
 }
-
-

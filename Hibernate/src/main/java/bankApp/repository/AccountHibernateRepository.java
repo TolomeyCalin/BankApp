@@ -1,22 +1,20 @@
-package bankApp.repo;
+package bankApp.repository;
 
-import bankApp.entities.Bank;
+import bankApp.entities.Account;
 import bankApp.config.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-public class BankHibernateRepository implements BankRepository {
-
+public class AccountHibernateRepository implements AccountRepository {
 
     @Override
-    public void create(Bank bank) {
+    public void create(Account account) {
         Transaction transaction = null;
         try (Session session = getSession()) {
             transaction = session.beginTransaction();
-            
 
-            session.save(bank);
+            session.save(account);
 
             transaction.commit();
 
@@ -27,35 +25,33 @@ public class BankHibernateRepository implements BankRepository {
         }
     }
 
-    
     @Override
-    public Bank findById(int bankId) {
-        Bank result = null;
+    public Account findById(int accountId) {
+        Account result = null;
         try (Session session = getSession()) {
-            result = session.find(Bank.class, bankId);
+            result = session.find(Account.class, accountId);
         } catch (HibernateException e) {
             System.out.println(e.getMessage());
         }
         return result;
     }
 
-    
     @Override
-    public Bank update(int bankId, Bank bankName) {
-        Bank result = null;
+    public Account update(int accountId, Account accountDetails) {
+        Account result = null;
         Transaction transaction = null;
         try (Session session = getSession()) {
-            Bank bank = session.find(Bank.class, bankId);
+            Account accountToBeUpdated = session.find(Account.class, accountId);
 
             transaction = session.beginTransaction();
 
-            bank.setBankName(bankName.getBankName());
+            accountToBeUpdated.setIban(accountDetails.getIban());
+            accountToBeUpdated.setAccountType(accountDetails.getAccountType());
 
-
-            session.update(bank);
+            session.update(accountToBeUpdated);
 
             transaction.commit();
-            result = session.find(Bank.class, bankId);
+            result = session.find(Account.class, accountId);
         } catch (HibernateException e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -65,16 +61,15 @@ public class BankHibernateRepository implements BankRepository {
         return result;
     }
 
-    
     @Override
-    public void delete(int bankId) {
+    public void delete(int accountId) {
         Transaction transaction = null;
         try (Session session = getSession()) {
-            Bank bank = session.find(Bank.class, bankId);
+            Account accountToBeDeleted = session.find(Account.class, accountId);
 
             transaction = session.beginTransaction();
 
-            session.delete(bank);
+            session.delete(accountToBeDeleted);
 
             transaction.commit();
         } catch (HibernateException e) {

@@ -2,6 +2,7 @@ package bankApp.entities;
 
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity(name = "Customer")
@@ -9,54 +10,45 @@ import javax.persistence.*;
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "Customer_Id")
-    private int customerId;
-    @Column(name = "Username")
-    private String username;
-    @Column(name = "Password")
-    private String password;
-    @Column(name = "FirstName")
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @Column(name = "firstName")
     private String firstName;
-    @Column(name = "LastName")
+    @Column(name = "lastName")
     private String lastName;
-    @Column(name = "DateOfBirth")
-    private String dateOfBirth;
     @Column(name = "CNP")
     private String cnp;
-    @Column(name = "Address")
-    private String address;
-    @Column(name = "Phone")
-    private String phone;
-    @Column(name = "Email")
+    @Column (name = "userName")
+    private String userName;
+    @Column (name = "password")
+    private String password;
+    @Column(name = "email")
     private String email;
+    @OneToMany(fetch=FetchType.LAZY,
+            mappedBy="customer",
+            cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+                    CascadeType.DETACH, CascadeType.REFRESH})
+    private List<Account> accounts;
 
     public Customer() {
     }
 
-    public Customer(String username, String password, String firstName, String lastName, String cnp, String email) {
-        this.username = username;
-        this.password = password;
+    public Customer(String firstName, String lastName, String cnp, String userName, String password, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.cnp = cnp;
+        this.userName = userName;
+        this.password = password;
         this.email = email;
     }
 
-    public String getUsername() {
-        return username;
+    public int getId() {
+        return id;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -75,14 +67,6 @@ public class Customer {
         this.lastName = lastName;
     }
 
-    public String getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(String dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
     public String getCnp() {
         return cnp;
     }
@@ -91,20 +75,20 @@ public class Customer {
         this.cnp = cnp;
     }
 
-    public String getAddress() {
-        return address;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getEmail() {
@@ -115,19 +99,25 @@ public class Customer {
         this.email = email;
     }
 
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", customerId=" + customerId +
+                "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", dateOfBirth=" + dateOfBirth +
-                ", cnp=" + cnp +
-                ", address='" + address + '\'' +
-                ", phone='" + phone + '\'' +
+                ", cnp='" + cnp + '\'' +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
+                ", accounts=" + accounts +
                 '}';
     }
 }

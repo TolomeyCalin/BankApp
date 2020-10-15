@@ -1,46 +1,55 @@
 package bankApp.entities;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "Account")
 @Table(name = "account")
-
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Account_Id")
-    private int accountId;
+    @Column(name = "id")
+    private int id;
     @Column(name = "IBAN")
     private String iban;
-    @Column(name = "Balance")
-    private double balance;
-    @Column(name = "AccountType")
+    @Column(name = "accountType")
     private String accountType;
+    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name="customer_id")
+    private Customer customer;
 
-    @OneToMany(
-            mappedBy = "bank",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    private List<TransactionHistory> transactionHistories = new ArrayList<>();
-
-
-    public Account(String iban, double balance, String accountType) {
-        this.iban = iban;
-        this.balance = balance;
-        this.accountType = accountType;
-    }
+    @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+    @JoinColumn(name="account_id")
+    private List<TransactionHistory> transactionHistoryList;
+    @ManyToMany(fetch=FetchType.LAZY,
+            cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+                    CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(
+            name="account_bank",
+            joinColumns=@JoinColumn(name="account_id"),
+            inverseJoinColumns=@JoinColumn(name="bank_id")
+    )
+    private List<Bank> banks;
 
     public Account() {
     }
 
-    public int getAccountId() {
-        return accountId;
+    public Account(int id, String iban, String accountType, Customer customer, List<TransactionHistory> transactionHistoryList, List<Bank> banks) {
+        this.id = id;
+        this.iban = iban;
+        this.accountType = accountType;
+        this.customer = customer;
+        this.transactionHistoryList = transactionHistoryList;
+        this.banks = banks;
     }
 
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getIban() {
@@ -51,14 +60,6 @@ public class Account {
         this.iban = iban;
     }
 
-    public double getBalance() {
-        return balance;
-    }
-
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
-
     public String getAccountType() {
         return accountType;
     }
@@ -67,14 +68,39 @@ public class Account {
         this.accountType = accountType;
     }
 
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public List<TransactionHistory> getTransactionHistoryList() {
+        return transactionHistoryList;
+    }
+
+    public void setTransactionHistoryList(List<TransactionHistory> transactionHistoryList) {
+        this.transactionHistoryList = transactionHistoryList;
+    }
+
+    public List<Bank> getBanks() {
+        return banks;
+    }
+
+    public void setBanks(List<Bank> banks) {
+        this.banks = banks;
+    }
+
     @Override
     public String toString() {
         return "Account{" +
-                "account_id=" + accountId +
-                ", IBAN=" + iban +
-                ", balance=" + balance +
+                "id=" + id +
+                ", iban='" + iban + '\'' +
                 ", accountType='" + accountType + '\'' +
+                ", customer=" + customer +
+                ", transactionHistoryList=" + transactionHistoryList +
+                ", banks=" + banks +
                 '}';
     }
 }
-

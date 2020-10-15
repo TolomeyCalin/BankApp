@@ -1,10 +1,11 @@
-package bankApp.repo;
+package bankApp.repository;
 
-import bankApp.entities.Customer;
 import bankApp.config.HibernateUtil;
+import bankApp.entities.Customer;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.NativeQuery;
 
 public class CustomerHibernateRepository implements CustomerRepository {
 
@@ -51,13 +52,11 @@ public class CustomerHibernateRepository implements CustomerRepository {
 
             customerToBeUpdated.setFirstName(customerDetails.getFirstName());
             customerToBeUpdated.setLastName(customerDetails.getLastName());
-            customerToBeUpdated.setAddress(customerDetails.getAddress());
             customerToBeUpdated.setCnp(customerDetails.getCnp());
-            customerToBeUpdated.setDateOfBirth(customerDetails.getDateOfBirth());
             customerToBeUpdated.setEmail(customerDetails.getEmail());
-            customerToBeUpdated.setPhone(customerDetails.getPhone());
             customerToBeUpdated.setPassword(customerDetails.getPassword());
-            customerToBeUpdated.setUsername(customerDetails.getUsername());
+            customerToBeUpdated.setUserName(customerDetails.getUserName());
+
 
             session.update(customerToBeUpdated);
 
@@ -89,6 +88,35 @@ public class CustomerHibernateRepository implements CustomerRepository {
             }
             System.out.println(e.getMessage());
         }
+    }
+    public long findIdByUsername(String username) {
+        long result = 0;
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+
+            String query = "select customer_id from customer where username =\"" + username + "\"";
+            NativeQuery<Customer> nativeQuery = session.createNativeQuery(query);
+            result = nativeQuery.getFirstResult();
+            session.close();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
+    }
+
+    public long findIdByPassword(String password) {
+        long result = 0;
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+
+            String query = "select customer_id from customer where password =\"" + password + "\"";
+            NativeQuery<Customer> nativeQuery = session.createNativeQuery(query);
+            result = nativeQuery.getFirstResult();
+            session.close();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
     }
 
     private Session getSession() {

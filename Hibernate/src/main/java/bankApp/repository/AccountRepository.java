@@ -1,4 +1,4 @@
-package bankApp.repo;
+package bankApp.repository;
 
 import bankApp.entities.Account;
 
