@@ -9,10 +9,10 @@ import static bankApp.Services.Register.register;
 public class StartMenu {
 
     public static void loadStartMenu() {
-        System.out.print("\n\u001B[7m\033[1;33m Bank Application Project                              \033[0m\n");
-        System.out.println("[\033[1;33mL\u001B[0m] Login");
-        System.out.println("[\033[1;33mR\u001B[0m] Register\n");
-        System.out.println("[\033[1;33mE\u001B[0m] Exit\n");
+        System.out.print("\n\u001B[7m\033[1;30m        Bank Application Project        \033[0m\n\n");
+        System.out.println("[\033[1;31mL\u001B[0m] Login\n");
+        System.out.println("[\033[1;32mR\u001B[0m] Register\n");
+        System.out.println("[\033[1;34mE\u001B[0m] Exit\n");
         Scanner input = new Scanner(System.in);
         while (true) {
             System.out.print("Choice: ");
