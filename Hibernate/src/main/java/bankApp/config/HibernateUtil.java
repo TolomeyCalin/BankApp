@@ -32,13 +32,13 @@ import java.util.Properties;
                     settings.put(Environment.HBM2DDL_AUTO, "update");
 
 
-                configuration.setProperties(settings);
-                configuration.addAnnotatedClass(Account.class);
-                configuration.addAnnotatedClass(Bank.class);
-                configuration.addAnnotatedClass(Customer.class);
-                configuration.addAnnotatedClass(TransactionHistory.class);
-                ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-                        .applySettings(configuration.getProperties()).build();
+                    configuration.setProperties(settings);
+                    configuration.addAnnotatedClass(Account.class);
+                    configuration.addAnnotatedClass(Bank.class);
+                    configuration.addAnnotatedClass(Customer.class);
+                    configuration.addAnnotatedClass(TransactionHistory.class);
+                    ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+                            .applySettings(configuration.getProperties()).build();
                 sessionFactory= configuration.buildSessionFactory(serviceRegistry);
             }catch (Exception e){
                 e.printStackTrace();

@@ -7,7 +7,7 @@ public interface AccountRepository {
 
     Account findById(int accountId);
 
-    Account update(int accountId, Account accountDetails);
+//    Account update(int accountId, Account accountDetails);
 
     void delete(int accountId);
 }

@@ -1,34 +1,42 @@
 package bankApp.Services;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
-import static bankApp.Services.LogIn.login;
-import static bankApp.Services.Register.register;
 
 
 public class StartMenu {
+    private static boolean blaBla = true;
+    public static BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+    public static void loadStartMenu() throws IOException {
 
-    public static void loadStartMenu() {
         System.out.print("\n\u001B[7m\033[1;30m        Bank Application Project        \033[0m\n\n");
         System.out.println("[\033[1;31mL\u001B[0m] Login\n");
         System.out.println("[\033[1;32mR\u001B[0m] Register\n");
         System.out.println("[\033[1;34mE\u001B[0m] Exit\n");
-        Scanner input = new Scanner(System.in);
-        while (true) {
+        while (blaBla) {
             System.out.print("Choice: ");
-            String choice = input.nextLine();
+            String choice = input.readLine();
             choice = choice.toUpperCase();
             if (choice.equals("L")) {
-                login();
-                break;
+                Login login = new Login();
+                login.loginCheck();
+
             } else if (choice.equals("R")) {
-                register();
-                break;
+                AppMenu register = new AppMenu();
+                register.register();
+
             } else if (choice.equals("E")) {
                 System.exit(0);
+                blaBla = false;
             }
         }
     }
 
 
 }
+
+
+
+

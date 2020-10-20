@@ -1,6 +1,9 @@
 package bankApp.entities;
 
+
+import bankApp.Services.Iban;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "Account")
@@ -12,36 +15,35 @@ public class Account {
     private int id;
     @Column(name = "IBAN")
     private String iban;
+    @Enumerated(EnumType.STRING)
     @Column(name = "accountType")
-    private String accountType;
+    private accountType accountType;
     @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name="customer_id")
     private Customer customer;
-
     @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-    @JoinColumn(name="account_id")
-    private List<TransactionHistory> transactionHistoryList;
-    @ManyToMany(fetch=FetchType.LAZY,
-            cascade= {CascadeType.PERSIST, CascadeType.MERGE,
-                    CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinTable(
-            name="account_bank",
-            joinColumns=@JoinColumn(name="account_id"),
-            inverseJoinColumns=@JoinColumn(name="bank_id")
-    )
-    private List<Bank> banks;
+    @JoinColumn(name="transaction_id")
+    private List<TransactionHistory> transactionHistory;
 
     public Account() {
     }
 
-    public Account(int id, String iban, String accountType, Customer customer, List<TransactionHistory> transactionHistoryList, List<Bank> banks) {
+    public Account(int id, String iban, accountType accountType, Customer customer, List<TransactionHistory> transactionHistory) {
         this.id = id;
         this.iban = iban;
         this.accountType = accountType;
         this.customer = customer;
-        this.transactionHistoryList = transactionHistoryList;
-        this.banks = banks;
+        this.transactionHistory = transactionHistory;
+
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public int getId() {
@@ -56,41 +58,47 @@ public class Account {
         return iban;
     }
 
-    public void setIban(String iban) {
-        this.iban = iban;
+    public void setIban() {
+        this.iban = Iban.ibanGenerator();
     }
 
-    public String getAccountType() {
+    public bankApp.entities.accountType getAccountType() {
         return accountType;
     }
 
     public void setAccountType(String accountType) {
-        this.accountType = accountType;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+        switch (accountType) {
+            case "CREDIT EURO":
+                   this.accountType = bankApp.entities.accountType.CREDIT_EURO;
+                   break;
+            case "CREDIT RON":
+                    this.accountType = bankApp.entities.accountType.CREDIT_RON;
+            case "DEBIT EURO":
+                    this.accountType = bankApp.entities.accountType.DEBIT_EURO;
+            case "DEBIT RON":
+                    this.accountType = bankApp.entities.accountType.DEBIT_RON;
+                break;
+            default:
+        }
     }
 
     public List<TransactionHistory> getTransactionHistoryList() {
-        return transactionHistoryList;
+        return transactionHistory;
     }
 
     public void setTransactionHistoryList(List<TransactionHistory> transactionHistoryList) {
-        this.transactionHistoryList = transactionHistoryList;
+        this.transactionHistory = transactionHistoryList;
     }
 
-    public List<Bank> getBanks() {
-        return banks;
+    public void addTransactions(TransactionHistory tempTransaction) {
+
+        if (transactionHistory == null) {
+            transactionHistory = new ArrayList<>();
+        }
+        transactionHistory.add(tempTransaction);
+        tempTransaction.setAccount(this);
     }
 
-    public void setBanks(List<Bank> banks) {
-        this.banks = banks;
-    }
 
     @Override
     public String toString() {
@@ -99,8 +107,8 @@ public class Account {
                 ", iban='" + iban + '\'' +
                 ", accountType='" + accountType + '\'' +
                 ", customer=" + customer +
-                ", transactionHistoryList=" + transactionHistoryList +
-                ", banks=" + banks +
+                ", transactionHistoryList=" + transactionHistory +
                 '}';
     }
 }
+

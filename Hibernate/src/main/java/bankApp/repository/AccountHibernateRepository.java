@@ -36,30 +36,30 @@ public class AccountHibernateRepository implements AccountRepository {
         return result;
     }
 
-    @Override
-    public Account update(int accountId, Account accountDetails) {
-        Account result = null;
-        Transaction transaction = null;
-        try (Session session = getSession()) {
-            Account accountToBeUpdated = session.find(Account.class, accountId);
-
-            transaction = session.beginTransaction();
-
-            accountToBeUpdated.setIban(accountDetails.getIban());
-            accountToBeUpdated.setAccountType(accountDetails.getAccountType());
-
-            session.update(accountToBeUpdated);
-
-            transaction.commit();
-            result = session.find(Account.class, accountId);
-        } catch (HibernateException e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            System.out.println(e.getMessage());
-        }
-        return result;
-    }
+//    @Override
+//    public Account update(int accountId, Account accountDetails) {
+//        Account result = null;
+//        Transaction transaction = null;
+//        try (Session session = getSession()) {
+//            Account accountToBeUpdated = session.find(Account.class, accountId);
+//
+//            transaction = session.beginTransaction();
+//
+//            accountToBeUpdated.setIban(accountDetails.getIban());
+//            accountToBeUpdated.setAccountType(accountDetails.getAccountType());
+//
+//            session.update(accountToBeUpdated);
+//
+//            transaction.commit();
+//            result = session.find(Account.class, accountId);
+//        } catch (HibernateException e) {
+//            if (transaction != null) {
+//                transaction.rollback();
+//            }
+//            System.out.println(e.getMessage());
+//        }
+//        return result;
+//    }
 
     @Override
     public void delete(int accountId) {

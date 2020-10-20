@@ -1,12 +1,11 @@
 package bankApp.entities;
-
 import javax.persistence.*;
-import java.security.Timestamp;
 
 @Entity(name = "TransactionHistory")
 @Table(name = "transactionhistory")
 
 public class TransactionHistory {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -22,12 +21,15 @@ public class TransactionHistory {
     @Column(name = "currency")
     private String currency;
     @Column(name = "changed_at")
-    private Timestamp changed_at;
-
+    @Temporal(TemporalType.TIMESTAMP)
+    private java.util.Date changed_at;
+    @ManyToOne
+    @JoinColumn(name="account_id")
+    private Account account;
 
     public TransactionHistory() {
     }
-    public TransactionHistory(int id, double deposit, double amount, double withdraw, double balance, String currency, Timestamp changed_at) {
+    public TransactionHistory(int id, double deposit, double amount, double withdraw, double balance, String currency, java.util.Date changed_at) {
         this.id = id;
         this.deposit = deposit;
         this.amount = amount;
@@ -35,6 +37,14 @@ public class TransactionHistory {
         this.balance = balance;
         this.currency = currency;
         this.changed_at = changed_at;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public int getId() {
@@ -85,11 +95,11 @@ public class TransactionHistory {
         this.currency = currency;
     }
 
-    public Timestamp getChanged_at() {
+    public java.util.Date getChanged_at() {
         return changed_at;
     }
 
-    public void setChanged_at(Timestamp changed_at) {
+    public void setChanged_at(java.util.Date changed_at) {
         this.changed_at = changed_at;
     }
 
@@ -106,4 +116,5 @@ public class TransactionHistory {
                 '}';
     }
 }
+
 

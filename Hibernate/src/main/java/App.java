@@ -1,12 +1,10 @@
-import bankApp.entities.TransactionHistory;
-import bankApp.repository.TransactionHistoryHibernateRepository;
+import bankApp.Services.StartMenu;
+
+import java.io.IOException;
 
 public class App {
-    public static void main(String[] args) {
-//        StartMenu.loadStartMenu();
+    public static void main(String[] args) throws IOException {
+        StartMenu.loadStartMenu();
 
-        TransactionHistory transactionHistory = new TransactionHistory();
-        TransactionHistoryHibernateRepository transactionHistoryHibernateRepository = new TransactionHistoryHibernateRepository();
-        transactionHistoryHibernateRepository.create(transactionHistory);
     }
 }

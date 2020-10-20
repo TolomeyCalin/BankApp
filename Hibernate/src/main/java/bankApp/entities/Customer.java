@@ -1,7 +1,7 @@
 package bankApp.entities;
 
-
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -17,14 +17,29 @@ public class Customer {
     private String firstName;
     @Column(name = "lastName")
     private String lastName;
+    @Column(name = "dateOfBirth")
+    private String dateOfBirth;
     @Column(name = "CNP")
     private String cnp;
+    @Column(name = "address")
+    private String address;
+    @Column(name = "phone")
+    private String phone;
     @Column (name = "userName")
     private String userName;
     @Column (name = "password")
     private String password;
     @Column(name = "email")
     private String email;
+    @ManyToMany(fetch=FetchType.LAZY,
+            cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+                    CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(
+            name="bank_customer",
+            joinColumns=@JoinColumn(name="customer_id"),
+            inverseJoinColumns=@JoinColumn(name="bank_id")
+    )
+    private List<Bank> banks;
     @OneToMany(fetch=FetchType.LAZY,
             mappedBy="customer",
             cascade= {CascadeType.PERSIST, CascadeType.MERGE,
@@ -32,23 +47,39 @@ public class Customer {
     private List<Account> accounts;
 
     public Customer() {
+
     }
 
-    public Customer(String firstName, String lastName, String cnp, String userName, String password, String email) {
+    public Customer(String firstName, String lastName, String dateOfBirth, String cnp, String address, String phone, String userName, String password, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
         this.cnp = cnp;
+        this.address = address;
+        this.phone = phone;
         this.userName = userName;
         this.password = password;
         this.email = email;
+        this.banks = banks;
+    }
+
+
+    public List<Bank> getBanks() {
+        return banks;
+    }
+    public void setBanks(List<Bank> banks) {
+        this.banks = banks;
+    }
+    public void addBanks(Bank theBank) {
+
+        if (banks == null) {
+            banks = new ArrayList<>();
+        }
+        banks.add(theBank);
     }
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getFirstName() {
@@ -67,12 +98,36 @@ public class Customer {
         this.lastName = lastName;
     }
 
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
     public String getCnp() {
         return cnp;
     }
 
     public void setCnp(String cnp) {
         this.cnp = cnp;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getUserName() {
@@ -99,6 +154,7 @@ public class Customer {
         this.email = email;
     }
 
+
     public List<Account> getAccounts() {
         return accounts;
     }
@@ -106,6 +162,15 @@ public class Customer {
     public void setAccounts(List<Account> accounts) {
         this.accounts = accounts;
     }
+    public void addAccounts(Account tempAccount) {
+
+        if (accounts == null) {
+            accounts = new ArrayList<>();
+        }
+        accounts.add(tempAccount);
+        tempAccount.setCustomer(this);
+    }
+
 
     @Override
     public String toString() {
@@ -113,11 +178,14 @@ public class Customer {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", cnp='" + cnp + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", CNP=" + cnp +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", accounts=" + accounts +
+                ", banks='" + banks +
                 '}';
     }
 }
