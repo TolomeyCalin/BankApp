@@ -16,8 +16,6 @@ public class TransactionHistory {
     private double amount;
     @Column(name = "withdraw")
     private double withdraw;
-    @Column(name = "balance")
-    private double balance;
     @Column(name = "currency")
     private String currency;
     @Column(name = "changed_at")
@@ -29,12 +27,11 @@ public class TransactionHistory {
 
     public TransactionHistory() {
     }
-    public TransactionHistory(int id, double deposit, double amount, double withdraw, double balance, String currency, java.util.Date changed_at) {
+    public TransactionHistory(int id, double deposit, double amount, double withdraw, String currency, java.util.Date changed_at) {
         this.id = id;
         this.deposit = deposit;
         this.amount = amount;
         this.withdraw = withdraw;
-        this.balance = balance;
         this.currency = currency;
         this.changed_at = changed_at;
     }
@@ -79,14 +76,6 @@ public class TransactionHistory {
         this.withdraw = withdraw;
     }
 
-    public double getBalance() {
-        return balance;
-    }
-
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
-
     public String getCurrency() {
         return currency;
     }
@@ -110,9 +99,9 @@ public class TransactionHistory {
                 ", deposit=" + deposit +
                 ", amount=" + amount +
                 ", withdraw=" + withdraw +
-                ", balance=" + balance +
                 ", currency='" + currency + '\'' +
                 ", changed_at=" + changed_at +
+                ", account=" + account +
                 '}';
     }
 }

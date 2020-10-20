@@ -196,7 +196,7 @@ public class AppMenu {
             session.save(tempCustomer);
             tempCustomer.addAccounts(tempAccount);
             session.save(tempAccount);
-            int accountId = tempAccount.getId();
+            long accountId = tempAccount.getId();
             result1 = session.find(Account.class, accountId);
             TransactionHistory tempTransactionHistory = new TransactionHistory();
             tempAccount.addTransactions(tempTransactionHistory);

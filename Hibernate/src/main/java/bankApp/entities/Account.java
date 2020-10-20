@@ -12,9 +12,11 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private long id;
     @Column(name = "IBAN")
     private String iban;
+    @Column(name = "balance")
+    private double balance;
     @Enumerated(EnumType.STRING)
     @Column(name = "accountType")
     private accountType accountType;
@@ -22,6 +24,9 @@ public class Account {
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name="customer_id")
     private Customer customer;
+    @Column (name = "currency")
+    @Enumerated (EnumType.STRING)
+    private AccountCurrencyEnum accountCurrencyEnum;
     @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name="transaction_id")
     private List<TransactionHistory> transactionHistory;
@@ -29,12 +34,14 @@ public class Account {
     public Account() {
     }
 
-    public Account(int id, String iban, accountType accountType, Customer customer, List<TransactionHistory> transactionHistory) {
+    public Account(int id, String iban, Double balance, accountType accountType, Customer customer, List<TransactionHistory> transactionHistory, Enum accountCurrencyEnum) {
         this.id = id;
         this.iban = iban;
+        this.balance = balance;
         this.accountType = accountType;
         this.customer = customer;
         this.transactionHistory = transactionHistory;
+        this.accountCurrencyEnum = (AccountCurrencyEnum) accountCurrencyEnum;
 
     }
 
@@ -46,12 +53,28 @@ public class Account {
         this.customer = customer;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
+    }
+
+    public AccountCurrencyEnum getAccountCurrencyEnum() {
+        return accountCurrencyEnum;
+    }
+
+    public void setAccountCurrencyEnum(AccountCurrencyEnum accountCurrencyEnum) {
+        this.accountCurrencyEnum = accountCurrencyEnum;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 
     public String getIban() {
@@ -105,9 +128,10 @@ public class Account {
         return "Account{" +
                 "id=" + id +
                 ", iban='" + iban + '\'' +
-                ", accountType='" + accountType + '\'' +
+                ", balance=" + balance +
+                ", accountType=" + accountType +
                 ", customer=" + customer +
-                ", transactionHistoryList=" + transactionHistory +
+                ", transactionHistory=" + transactionHistory +
                 '}';
     }
 }

@@ -1,7 +1,7 @@
 package bankApp.repository;
 
-import bankApp.entities.TransactionHistory;
 import bankApp.config.HibernateUtil;
+import bankApp.entities.TransactionHistory;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -47,7 +47,6 @@ public class TransactionHistoryHibernateRepository implements TransactionHistory
             transactionHistory.setDeposit(transactionDetails.getDeposit());
             transactionHistory.setAmount(transactionDetails.getAmount());
             transactionHistory.setWithdraw(transactionDetails.getWithdraw());
-            transactionHistory.setBalance(transactionDetails.getBalance());
             session.update(transactionHistory);
 
             transaction.commit();
